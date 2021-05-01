@@ -54,8 +54,7 @@ public class Main {
 			ins += i + ", ";
 			ins += "'" + departamentos[i] +"', ";
 			ins += "NULL);";
-			System.out.println(ins);
-			//TODO escribir el ins
+			//System.out.println(ins);
 			bw.write(ins);
 			
 			String[] d = new String[3];
@@ -147,9 +146,9 @@ public class Main {
 						boolean agrego = false;
 						for(int j = 0; j < deps.size() && !agrego; j++) {
 							if(deps.get(j)[2].equals("")) {
-								updates += "UPDATE DEPARTMENT\n"
+								updates += "\nUPDATE DEPARTMENT\n"
 										+ "SET MNG_EMP_NO=" + e[0] + "\n"
-												+ "WHERE DEPT_NO =" + deps.get(j)[0] + "\n\n";
+												+ "WHERE DEPT_NO =" + deps.get(j)[0] + "\n";
 								posicion = 0;
 								agrego = true;
 								depart = Integer.parseInt(deps.get(j)[0]);
@@ -181,17 +180,14 @@ public class Main {
 					//depa = departamentos[dto];
 					cualdepa = dto;
 				}
-				insert += "'" + cualdepa + "');";
+				insert += cualdepa + ");";
 				e[7] = cualdepa + "";
-				System.out.println(insert);
+				//System.out.println(insert);
 				emps.add(e);
-				
-				//TODO agregar insert
 				bw.write(insert);
 			}
-			System.out.println(updates);
-			
-			//TODO agregar updates
+			//System.out.println(updates);
+		
 			bw.write(updates);
 			
 			String insp = "";
@@ -205,8 +201,7 @@ public class Main {
 				}
 				//int po = (int) Math.floor(Math.random() * (departamentos.length - 1));
 				insp += contador +");";
-				System.out.println(insp);
-				//TODO escribir el insp
+				//System.out.println(insp);
 				bw.write(insp);
 				
 				String[] d1 = new String[3];
@@ -247,7 +242,7 @@ public class Main {
 					continue;
 				}
 				
-				works += projNo + " ";
+				works += projNo + ", ";
 				int mes = (int) Math.floor(Math.random() * (13 - 1) + 1);
 				int año = (int) Math.floor(Math.random() * (2020 - 2015) + 2015);
 				int dia = (int) Math.floor(Math.random() * (diaGenerator(mes, año) + 1 - 1) + 1);
@@ -267,7 +262,7 @@ public class Main {
 				works += "'" + fecha + "', ";
 				int horas = (int) Math.floor(Math.random() * (9 - 1) + 1);
 				works += horas + ");";
-				System.out.println(works);
+				//System.out.println(works);
 				bw.write(works);
 			}
 			bw.close();
