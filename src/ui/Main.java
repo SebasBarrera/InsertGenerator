@@ -1,22 +1,20 @@
 package ui;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.Scanner;
 
 public class Main {
 
 	private static final String INPUT = "data/MOCK_DATA.csv";
-	private static final OutputStream OUTPUT = null;
+	private static final String OUTPUT = "data/Inserts.sql";
 	public  ArrayList<String[]> deps;
 	public  ArrayList<String[]> emps;
+	public  ArrayList<String[]> pros;
 	public  String[] firstName;
 	public  String[] lastName;
 	private  String[] departamentos;
@@ -40,22 +38,25 @@ public class Main {
 				"Sistemas de informacion", "Expansion", "Logistica"};
 		posiciones = new String[] {"Jefe de Departamento", "Ejecutivo", "Secretario", "Aprendiz",
 				"Colaborador", "Asistente", "Coordinador", "Contador", "Ingeniero"};
-		projects = new String[] {"omega", "beta", "alfa", "xilium", "Juliom", "X project"};
-		
+		projects = new String[] {"omega", "beta", "alfa", "xilium", "Juliom", "X project",
+				"Alcanzando el cambio", "polo a tierra", "una mano amiga", "estar bien es ser consciente",
+				"un muno para transformar", "por un mundo mejor"};
+
 		deps = new ArrayList<String[]>();
 		emps = new ArrayList<String[]>();
+		pros = new ArrayList<String[]>();
 		br = new BufferedReader(new FileReader(INPUT));
-		bw = new BufferedWriter(new OutputStreamWriter(OUTPUT));
-		
+		bw = new BufferedWriter(new FileWriter(OUTPUT));
 		
 		String ins = "";
 		for (int i = 0; i < departamentos.length; i++) {
-			ins = "INSERT INTO DEPARTMENT VALUES(";
+			ins = "\nINSERT INTO DEPARTMENT VALUES(";
 			ins += i + ", ";
 			ins += "'" + departamentos[i] +"', ";
 			ins += "NULL);";
 			System.out.println(ins);
 			//TODO escribir el ins
+			bw.write(ins);
 			
 			String[] d = new String[3];
 			d[0] = i + "";
@@ -73,7 +74,7 @@ public class Main {
 			lastName[i] = ar[1];
 			line = br.readLine();
 		}
-		
+		br.close();
 		
 		if (empleados < 20) {
 			System.out.println("Minimo debe generar 20 empleados");
@@ -84,7 +85,7 @@ public class Main {
 			for (int i = 0; i < empleados; i++) {
 				String e[] = new String[8];
 				
-				insert = "INSERT INTO EMPLOYEE VALUES(";
+				insert = "\nINSERT INTO EMPLOYEE VALUES(";
 				
 				insert += i + ", ";
 				e[0] = i + "";
@@ -164,28 +165,112 @@ public class Main {
 				if(posicion == 0) {
 					pos = posiciones[0];
 				} else {
-					int po = (int) Math.floor(Math.random() * (9 - 1) + 1);
+					int po = (int) Math.floor(Math.random() * (posiciones.length - 1) + 1);
 					pos = posiciones[po];
 				}
 				insert += "'" + pos + "', ";
 				e[6] = pos;
 				
-				String depa = "";
+				int cualdepa= -1;
+				//String depa = "";
 				if(depart != -1) {
-					depa = departamentos[depart];
+					//depa = departamentos[depart];
+					cualdepa = depart;
 				} else {
-					int dto = (int) Math.floor(Math.random() * (7 - 1));
-					depa = departamentos[dto];
+					int dto = (int) Math.floor(Math.random() * (departamentos.length - 1));
+					//depa = departamentos[dto];
+					cualdepa = dto;
 				}
-				insert += "'" + depa + "');";
-				System.out.println(insert + "\n");
+				insert += "'" + cualdepa + "');";
+				e[7] = cualdepa + "";
+				System.out.println(insert);
 				emps.add(e);
+				
 				//TODO agregar insert
+				bw.write(insert);
 			}
 			System.out.println(updates);
 			
 			//TODO agregar updates
+			bw.write(updates);
 			
+			String insp = "";
+			int contador = 1;
+			for (int i = 0; i < projects.length; i++) {
+				insp = "\nINSERT INTO PROJECT VALUES(";
+				insp += (i) + ", ";
+				insp += "'" + projects[i] +"', ";
+				if (i == 2*contador) {
+					contador++;
+				}
+				//int po = (int) Math.floor(Math.random() * (departamentos.length - 1));
+				insp += contador +");";
+				System.out.println(insp);
+				//TODO escribir el insp
+				bw.write(insp);
+				
+				String[] d1 = new String[3];
+				d1[0] = (i) + "";
+				d1[1] = projects[i];
+				d1[2] = contador + "";
+				pros.add(d1);
+			}
+			
+			String works = "";
+			int trabajos = (int) Math.floor(Math.random() * (emps.size() - ((int) Math.floor(Math.random() * (emps.size()*1/4))) ));
+			for (int i = 0; i < trabajos; i++) {
+				works = "\nINSERT INTO WORKSON(";
+				int cualEmpleado = ((int) Math.floor(Math.random() * (emps.size())));
+				String[] emplea = emps.get(cualEmpleado);
+				String empNo = emplea[0];
+				works += empNo + ", ";
+				String projNo = "";
+				String deptNo = emplea[7];
+				double s = Math.random();
+				boolean encontro = false;
+				if (s >= 0.5) {
+					for (int j = 0; j < projects.length && !encontro; j += 2) {
+						if (pros.get(j)[2].equals(deptNo)) {
+							projNo = pros.get(j)[0];
+							encontro = true;
+						}
+					}
+				} else {
+					for (int j = 1; j < projects.length && !encontro; j += 2) {
+						if (pros.get(j)[2].equals(deptNo)) {
+							projNo = pros.get(j)[0];
+							encontro = true;
+						}
+					}
+				}
+				if (projNo.equals("")) {
+					continue;
+				}
+				
+				works += projNo + " ";
+				int mes = (int) Math.floor(Math.random() * (13 - 1) + 1);
+				int año = (int) Math.floor(Math.random() * (2020 - 2015) + 2015);
+				int dia = (int) Math.floor(Math.random() * (diaGenerator(mes, año) + 1 - 1) + 1);
+				String ndia = "";
+				if(dia <10) {
+					ndia = "0" + dia;
+				} else {
+					ndia = "" + dia;
+				}
+				String nmes = "";
+				if (mes < 10) {
+					nmes = "0" + mes;
+				} else {
+					nmes = "" + mes;
+				}
+				String fecha = nmes + "-" + ndia + "-" + año;
+				works += "'" + fecha + "', ";
+				int horas = (int) Math.floor(Math.random() * (9 - 1) + 1);
+				works += horas + ");";
+				System.out.println(works);
+				bw.write(works);
+			}
+			bw.close();
 			
 		}
 		
@@ -220,7 +305,6 @@ public class Main {
         }
         return dias;
 	}
-
 
 
 }
