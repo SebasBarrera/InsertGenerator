@@ -39,8 +39,8 @@ public class Main {
 		posiciones = new String[] {"Jefe de Departamento", "Ejecutivo", "Secretario", "Aprendiz",
 				"Colaborador", "Asistente", "Coordinador", "Contador", "Ingeniero"};
 		projects = new String[] {"omega", "beta", "alfa", "xilium", "Juliom", "X project",
-				"Alcanzando el cambio", "polo a tierra", "una mano amiga", "estar bien es ser consciente",
-				"un muno para transformar", "por un mundo mejor"};
+				"por el cambio", "polo a tierra", "una mano amiga", "estar bien",
+				"mundo de todos", "mundo mejor"};
 
 		deps = new ArrayList<String[]>();
 		emps = new ArrayList<String[]>();
@@ -195,21 +195,22 @@ public class Main {
 					contador++;
 				}
 				//int po = (int) Math.floor(Math.random() * (departamentos.length - 1));
-				insp += contador +");";
+				int elQuePongo = contador - 1;
+				insp += elQuePongo +");";
 				//System.out.println(insp);
 				bw.write(insp);
 				
 				String[] d1 = new String[3];
 				d1[0] = (i) + "";
 				d1[1] = projects[i];
-				d1[2] = contador + "";
+				d1[2] = elQuePongo + "";
 				pros.add(d1);
 			}
 			
 			String works = "";
 			int trabajos = (int) Math.floor(Math.random() * (emps.size() - ((int) Math.floor(Math.random() * (emps.size()*1/4))) ));
 			for (int i = 0; i < trabajos; i++) {
-				works = "\nINSERT INTO WORKSON(";
+				works = "\nINSERT INTO WORKSON VALUES(";
 				int cualEmpleado = ((int) Math.floor(Math.random() * (emps.size())));
 				String[] emplea = emps.get(cualEmpleado);
 				String empNo = emplea[0];
