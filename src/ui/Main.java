@@ -143,7 +143,7 @@ public class Main {
 							if(deps.get(j)[2].equals("")) {
 								updates += "\nUPDATE DEPARTMENT\n"
 										+ "SET MNG_EMP_NO=" + e[0] + "\n"
-												+ "WHERE DEPT_NO =" + deps.get(j)[0] + "\n";
+												+ "WHERE DEPT_NO =" + deps.get(j)[0] + ";\n";
 								posicion = 0;
 								agrego = true;
 								depart = Integer.parseInt(deps.get(j)[0]);
