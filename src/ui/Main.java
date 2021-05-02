@@ -120,13 +120,8 @@ public class Main {
 				} else {
 					ndia = "" + dia;
 				}
-				String nmes = "";
-				if (mes < 10) {
-					nmes = "0" + mes;
-				} else {
-					nmes = "" + mes;
-				}
-				String fecha = nmes + "-" + ndia + "-" + año;
+				String nmes = calcularMes(mes);
+				String fecha = ndia + "-" + nmes + "-" + año;
 				insert += "'" + fecha + "', ";
 				e[4] = fecha;
 				
@@ -252,13 +247,8 @@ public class Main {
 				} else {
 					ndia = "" + dia;
 				}
-				String nmes = "";
-				if (mes < 10) {
-					nmes = "0" + mes;
-				} else {
-					nmes = "" + mes;
-				}
-				String fecha = nmes + "-" + ndia + "-" + año;
+				String nmes = calcularMes(mes);
+				String fecha = ndia + "-" + nmes + "-" + año;
 				works += "'" + fecha + "', ";
 				int horas = (int) Math.floor(Math.random() * (9 - 1) + 1);
 				works += horas + ");";
@@ -270,6 +260,50 @@ public class Main {
 		}
 		
 		
+	}
+
+	private String calcularMes(int mes) {
+		String m = "";
+		switch(mes){
+        case 1:
+        	m = "JAN";
+        	break;
+        case 2:
+        	m = "FEB";
+        	break;
+        case 3:
+        	m = "MAR";
+        	break;
+        case 4:
+        	m = "APR";
+        	break;
+        case 5:
+        	m = "MAY";
+        	break;
+        case 6:
+        	m = "JUN";
+        	break;
+        case 7:
+        	m = "JUL";
+        	break;
+        case 8:
+        	m = "AUG";
+        	break;
+        case 9:
+        	m = "SEP";
+        	break;
+        case 10:
+        	m = "OCT";
+        	break;
+        case 11:
+        	m = "NOV";
+        	break;
+        case 12:
+        	m = "DEC";
+        	break;
+        
+		}
+		return m;
 	}
 
 	private int diaGenerator(int mes, int año) {
