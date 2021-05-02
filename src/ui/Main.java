@@ -35,7 +35,7 @@ public class Main {
 		int empleados =  sc.nextInt();
 		
 		departamentos = new String[] {"Calidad", "Administracion", "Inventario", 
-				"Sistemas de informacion", "Expansion", "Logistica"};
+				"Sistemas de info.", "Expansion", "Logistica"};
 		posiciones = new String[] {"Jefe de Departamento", "Ejecutivo", "Secretario", "Aprendiz",
 				"Colaborador", "Asistente", "Coordinador", "Contador", "Ingeniero"};
 		projects = new String[] {"omega", "beta", "alfa", "xilium", "Juliom", "X project",
