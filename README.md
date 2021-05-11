@@ -17,6 +17,8 @@ Para esto ejecutaremos el siguiente comando en el proyecto que se descargo:
 <br>
 <code>javac -cp src src/ui/Main.java -d bin</code>
 <br>
+<i>Este proceso solo se debera hacer una unica vez</i>
+<br>
 ## Ejecución
 Ya compilado nuestro programa, se debe ejecutar con el comando:
 <br>
